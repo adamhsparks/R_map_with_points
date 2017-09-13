@@ -49,10 +49,10 @@ library(sf)
 
     ## Linking to GEOS 3.6.2, GDAL 2.2.1, proj.4 4.9.3, lwgeom 2.3.2 r15302
 
-Get the data to recreate our map
---------------------------------
+Get the Data to Create Our Map
+------------------------------
 
-### Adding a shapefile of Australia
+### Add a Shapefile of Australia
 
 This is our base layer, Australia, of the map from (Naturalearth.com)\[<https://naturalearth.com/>\]
 
@@ -66,7 +66,7 @@ plot(oz_shape)
     ## Warning: plotting the first 9 out of 59 attributes; use max.plot = 59 to
     ## plot all
 
-![](generic_map_files/figure-markdown_github-ascii_identifiers/australia-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/australia-1.png)
 
 However, it includes several islands and ocean that are not of interest to us. To fix this, crop it down to just the mainland plus Tasmania and remove Jervis Bay so that the labels on the final map product are cleaner.
 
@@ -95,7 +95,7 @@ plot(oz_shape)
     ## Warning: plotting the first 9 out of 59 attributes; use max.plot = 59 to
     ## plot all
 
-![](generic_map_files/figure-markdown_github-ascii_identifiers/crop_shape-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/crop_shape-1.png)
 
 Import Collection Point Data
 ----------------------------
@@ -154,7 +154,7 @@ oz
 
     ## Warning: Removed 1 rows containing missing values (geom_point).
 
-![](generic_map_files/figure-markdown_github-ascii_identifiers/plot-1.png)
+![](README_files/figure-markdown_github-ascii_identifiers/plot-1.png)
 
 Save the graph
 --------------
