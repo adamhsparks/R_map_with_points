@@ -4,6 +4,10 @@ output: github_document
 
 ## Create a map of Australia and Map Data Collection Points
 
+This is a simple RMD file to illustrate how to use
+[_rnaturalearth_](https://github.com/ropenscilabs/rnaturalearth), [_simple features_](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html) and
+_ggplot2_ to create a map of Australia and plot data collection points on it.
+
 ### Setup
 
 To do this you'll need a few packages from CRAN:
