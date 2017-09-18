@@ -54,7 +54,7 @@ oz_shape <- st_intersection(oz_shape,
                       "SpatialPolygons")),
                   st_crs(oz_shape)))
 
-oz_shape <- oz_shape[oz_shape$woe_name != "Jervis Bay", ]
+oz_shape <- oz_shape[oz_shape$abbrev != "J.B.T.", ]
 
 plot(oz_shape)
 ```
@@ -63,7 +63,7 @@ plot(oz_shape)
 
 Assuming the "Geocode_319 samples.csv" file is in the same working directory as this script.
 
-```{r collection_data}
+```{r collection_data, eval=FALSE}
 point_data <- read_csv("Geocode_319 samples.csv")
 point_data$State <- as.factor(point_data$State)
 ```
@@ -72,7 +72,7 @@ point_data$State <- as.factor(point_data$State)
 
 Plot the final combination of data with the Naturalearth data Australia and state outlines with the sampling location points overplayed and colour-coded by the state where they were sampled.
 
-```{r plot, eval=TRUE}
+```{r plot, eval=FALSE}
 
 oz <- ggplot(oz_shape) +
   geom_sf(fill = "white") +
@@ -103,12 +103,12 @@ oz
 
 Export at 500 dpi for publication with a width 190mm for a 2-column width in an Elsevier publication.
 
-```{r, eval = FALSE}
+```{r, eval=FALSE}
 ggsave("Australia_Map.tiff", width = 190, units = "mm", dpi = 500)
 ```
 
 # Appendix
 
-```{r sessionInfo, eval=TRUE, echo=FALSE}
-sessionInfo()
+```{r session_info, eval=TRUE, echo=FALSE}
+devtools::session_info()
 ```
