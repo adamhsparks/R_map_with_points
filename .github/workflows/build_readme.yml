@@ -21,14 +21,13 @@ jobs:
 
     # install packages needed
     - name: install required packages
-      run: |
-        install.packages("rmarkdown")
+      run: install.packages("rmarkdown")
       shell: Rscript {0}
 
     # Render READEME.md using rmarkdown
     - name: render README
       run: rmarkdown::render("README.Rmd", output_format = "md_document")
-    shell: Rscript {0}
+      shell: Rscript {0}
 
     - name: commit rendered README
       run: |
