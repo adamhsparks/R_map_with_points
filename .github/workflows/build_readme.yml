@@ -31,6 +31,6 @@ jobs:
 
     - name: commit rendered README
       run: |
-        git commit add README.md README_files/*
+        git add README.md README_files/*
         git commit -m "Re-build README.md" || echo "No changes to commit"
         git push origin master || echo "No changes to commit"
