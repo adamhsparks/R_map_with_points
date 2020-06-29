@@ -5,7 +5,6 @@ name: render readme
 # Controls when the action will run
 on:
   push:
-    branches: master
 
 jobs:
   render:
