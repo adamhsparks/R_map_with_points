@@ -1,5 +1,5 @@
 
-## Create a map of Australia and Map Data Collection Points
+## Creating a Map of Australia, Adding Data for Sample Collection Points
 
 This is a simple RMD file to illustrate how to use
 [*rnaturalearth*](https://github.com/ropenscilabs/rnaturalearth),
@@ -22,24 +22,24 @@ if (!require("pacman")) {
 
 ``` r
 library("pacman")
-p_load(tidyverse, rnaturalearth, raster, sf, lwgeom)
-if (!require("rnaturalearthdata")) {
-  p_install_gh("ropenscilabs/rnaturalearthdata")
+p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+if (!require("rnaturalearthhires")) {
+  p_install_gh("ropenscilabs/rnaturalearthhires")
 }
 ```
 
-    ## Loading required package: rnaturalearthdata
+    ## Loading required package: rnaturalearthhires
 
 ### Add a Shapefile of Australia
 
 This is our base layer, Australia, of the map from
-(Naturalearth.com)\[<https://naturalearth.com/>\]
+(Naturalearth.com)\[<https://naturalearth.com/>\].
 
 ``` r
-oz_shape <- rnaturalearth::ne_states(geounit = "australia",
-                                     returnclass = "sf")
+oz_sf <- rnaturalearth::ne_states(geounit = "australia",
+                                  returnclass = "sf")
 
-plot(oz_shape)
+plot(oz_sf)
 ```
 
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
@@ -53,16 +53,15 @@ remove Jervis Bay so that the labels on the final map product are
 cleaner.
 
 ``` r
-oz_shape <- st_intersection(oz_shape,
-                st_set_crs(
-                  st_as_sf(
-                    as(
-                      raster::extent(114,
-                                     155,
-                                     -45,
-                                     -9),
-                      "SpatialPolygons")),
-                  st_crs(oz_shape)))
+oz_sf <- st_intersection(oz_sf,
+                         st_set_crs(st_as_sf(as(
+                           raster::extent(114,
+                                          155,
+                                          -45,
+                                          -9),
+                           "SpatialPolygons"
+                         )),
+                         st_crs(oz_sf)))
 ```
 
     ## although coordinates are longitude/latitude, st_intersection assumes that they are planar
@@ -71,21 +70,21 @@ oz_shape <- st_intersection(oz_shape,
     ## geometries
 
 ``` r
-oz_shape <- oz_shape[oz_shape$abbrev != "J.B.T.", ]
+oz_sf <- oz_sf[oz_sf$abbrev != "J.B.T.",]
 
-plot(oz_shape)
+plot(oz_sf)
 ```
 
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
     ## all
 
-![](README_files/figure-gfm/crop_shape-1.png)<!-- -->
+![](README_files/figure-gfm/crop_sf-1.png)<!-- -->
 
 ## Import Collection Point Data
 
 If you have your own data in a .csv file, import it using `read_csv()`.
-These are just random points that I generated to illustrate how to add
-points to a map.
+These are just random points that I generated and saved as a .csv file
+for this work to illustrate how to add points to a map.
 
 ``` r
 point_data <- read_csv("sample_points.csv",
@@ -96,17 +95,17 @@ point_data <- read_csv("sample_points.csv",
                        ))
 ```
 
-## Plot using ggplot2
+## Plot Using ggplot2
 
 Plot the final combination of data with the Naturalearthdata Australia
 data and state outlines with the sampling location points overplayed and
 colour-coded by the state where they were sampled.
 
 ``` r
-oz <- ggplot(oz_shape) +
+oz <- ggplot(oz_sf) +
   geom_sf(fill = "white") +
-  geom_text(
-    data = oz_shape,
+  geom_label(
+    data = oz_sf,
     aes(x = longitude,
         y = latitude,
         label = abbrev),
@@ -131,7 +130,7 @@ oz
 
 ![](README_files/figure-gfm/plot-1.png)<!-- -->
 
-## Save the graph
+## Save the Graph
 
 Export at 500 DPI for publication with a width 190mm for a 2-column
 width figure.
@@ -143,205 +142,53 @@ ggsave("Australia_Map.tiff",
        dpi = 500)
 ```
 
-# Appendix
+## Meta
 
-    ## ─ Session info ───────────────────────────────────────────────────────────────
-    ##  setting  value                       
-    ##  version  R version 4.0.2 (2020-06-22)
-    ##  os       macOS Catalina 10.15.5      
-    ##  system   x86_64, darwin17.0          
-    ##  ui       X11                         
-    ##  language (EN)                        
-    ##  collate  en_AU.UTF-8                 
-    ##  ctype    en_AU.UTF-8                 
-    ##  tz       Australia/Brisbane          
-    ##  date     2020-06-29                  
+### Code of Conduct
+
+Please note that the R\_map\_with\_points\_Oz project is released with a
+[Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
+
+### R Session Information
+
+    ## R version 4.0.2 (2020-06-22)
+    ## Platform: x86_64-apple-darwin17.0 (64-bit)
+    ## Running under: macOS Catalina 10.15.5
     ## 
-    ## ─ Packages ───────────────────────────────────────────────────────────────────
-    ##  package            * version    date       lib
-    ##  assertthat           0.2.1      2019-03-21 [1]
-    ##  backports            1.1.8      2020-06-17 [1]
-    ##  blob                 1.2.1      2020-01-20 [1]
-    ##  broom                0.5.6      2020-04-20 [1]
-    ##  callr                3.4.3      2020-03-28 [1]
-    ##  cellranger           1.1.0      2016-07-27 [1]
-    ##  class                7.3-17     2020-04-26 [2]
-    ##  classInt             0.4-3      2020-04-07 [1]
-    ##  cli                  2.0.2      2020-02-28 [1]
-    ##  clisymbols           1.2.0      2017-05-21 [1]
-    ##  codetools            0.2-16     2018-12-24 [2]
-    ##  colorspace           1.4-1      2019-03-18 [1]
-    ##  crayon               1.3.4.9000 2020-06-12 [1]
-    ##  DBI                  1.1.0      2019-12-15 [1]
-    ##  dbplyr               1.4.4      2020-05-27 [1]
-    ##  desc                 1.2.0      2018-05-01 [1]
-    ##  devtools             2.3.0      2020-04-10 [1]
-    ##  digest               0.6.25     2020-02-23 [1]
-    ##  dplyr              * 1.0.0      2020-05-29 [1]
-    ##  e1071                1.7-3      2019-11-26 [1]
-    ##  ellipsis             0.3.1      2020-05-15 [1]
-    ##  evaluate             0.14       2019-05-28 [1]
-    ##  fansi                0.4.1      2020-01-08 [1]
-    ##  farver               2.0.3      2020-01-16 [1]
-    ##  forcats            * 0.5.0      2020-03-01 [1]
-    ##  fs                   1.4.1      2020-04-04 [1]
-    ##  generics             0.0.2      2018-11-29 [1]
-    ##  ggplot2            * 3.3.2      2020-06-19 [1]
-    ##  glue                 1.4.1      2020-05-13 [1]
-    ##  gtable               0.3.0      2019-03-25 [1]
-    ##  haven                2.3.1      2020-06-01 [1]
-    ##  hms                  0.5.3      2020-01-08 [1]
-    ##  htmltools            0.5.0      2020-06-16 [1]
-    ##  httr                 1.4.1      2019-08-05 [1]
-    ##  jsonlite             1.7.0      2020-06-25 [1]
-    ##  KernSmooth           2.23-17    2020-04-26 [2]
-    ##  knitr                1.29       2020-06-23 [1]
-    ##  lattice              0.20-41    2020-04-02 [2]
-    ##  lifecycle            0.2.0      2020-03-06 [1]
-    ##  lubridate            1.7.9      2020-06-08 [1]
-    ##  lwgeom             * 0.2-5      2020-06-12 [1]
-    ##  magrittr             1.5        2014-11-22 [1]
-    ##  memoise              1.1.0      2017-04-21 [1]
-    ##  modelr               0.1.8      2020-05-19 [1]
-    ##  munsell              0.5.0      2018-06-12 [1]
-    ##  nlme                 3.1-148    2020-05-24 [2]
-    ##  pacman             * 0.5.1      2019-03-11 [1]
-    ##  pillar               1.4.4      2020-05-05 [1]
-    ##  pkgbuild             1.0.8      2020-05-07 [1]
-    ##  pkgconfig            2.0.3      2019-09-22 [1]
-    ##  pkgload              1.1.0      2020-05-29 [1]
-    ##  prettyunits          1.1.1      2020-01-24 [1]
-    ##  processx             3.4.2      2020-02-09 [1]
-    ##  prompt               1.0.0      2020-04-25 [1]
-    ##  ps                   1.3.3      2020-05-08 [1]
-    ##  purrr              * 0.3.4      2020-04-17 [1]
-    ##  R6                   2.4.1      2019-11-12 [1]
-    ##  raster             * 3.3-7      2020-06-27 [1]
-    ##  RColorBrewer         1.1-2      2014-12-07 [1]
-    ##  Rcpp                 1.0.4.6    2020-04-09 [1]
-    ##  readr              * 1.3.1      2018-12-21 [1]
-    ##  readxl               1.3.1      2019-03-13 [1]
-    ##  remotes              2.1.1      2020-02-15 [1]
-    ##  reprex               0.3.0      2019-05-16 [1]
-    ##  rgeos                0.5-3      2020-05-08 [1]
-    ##  rlang                0.4.6      2020-05-02 [1]
-    ##  rmarkdown            2.3        2020-06-18 [1]
-    ##  rnaturalearth      * 0.1.0      2017-03-21 [1]
-    ##  rnaturalearthdata  * 0.1.0      2017-02-21 [1]
-    ##  rnaturalearthhires   0.2.0      2020-06-29 [1]
-    ##  rprojroot            1.3-2      2018-01-03 [1]
-    ##  rstudioapi           0.11       2020-02-07 [1]
-    ##  rvest                0.3.5      2019-11-08 [1]
-    ##  scales               1.1.1      2020-05-11 [1]
-    ##  sessioninfo          1.1.1      2018-11-05 [1]
-    ##  sf                 * 0.9-4      2020-06-13 [1]
-    ##  sp                 * 1.4-2      2020-05-20 [1]
-    ##  stringi              1.4.6      2020-02-17 [1]
-    ##  stringr            * 1.4.0      2019-02-10 [1]
-    ##  testthat             2.3.2      2020-03-02 [1]
-    ##  tibble             * 3.0.1      2020-04-20 [1]
-    ##  tidyr              * 1.1.0      2020-05-20 [1]
-    ##  tidyselect           1.1.0      2020-05-11 [1]
-    ##  tidyverse          * 1.3.0      2019-11-21 [1]
-    ##  units                0.6-7      2020-06-13 [1]
-    ##  usethis              1.6.1      2020-04-29 [1]
-    ##  vctrs                0.3.1      2020-06-05 [1]
-    ##  withr                2.2.0      2020-04-20 [1]
-    ##  xfun                 0.15       2020-06-21 [1]
-    ##  xml2                 1.3.2      2020-04-23 [1]
-    ##  yaml                 2.2.1      2020-02-01 [1]
-    ##  source                                      
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  Github (r-lib/crayon@dcf6d44)               
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  Github (gaborcsardi/prompt@b332c42)         
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.2)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  Github (ropensci/rnaturalearthhires@2ed7a93)
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.1)                              
-    ##  CRAN (R 4.0.0)                              
-    ##  CRAN (R 4.0.0)                              
+    ## Matrix products: default
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
     ## 
-    ## [1] /Users/adamsparks/.R/library
-    ## [2] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+    ## locale:
+    ## [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8
+    ## 
+    ## attached base packages:
+    ## [1] stats     graphics  grDevices utils     datasets  methods   base     
+    ## 
+    ## other attached packages:
+    ##  [1] rnaturalearthhires_0.2.0 lwgeom_0.2-5             rgeos_0.5-3             
+    ##  [4] sf_0.9-4                 raster_3.3-7             sp_1.4-2                
+    ##  [7] rnaturalearthdata_0.1.0  rnaturalearth_0.1.0      forcats_0.5.0           
+    ## [10] stringr_1.4.0            dplyr_1.0.0              purrr_0.3.4             
+    ## [13] readr_1.3.1              tidyr_1.1.0              tibble_3.0.1            
+    ## [16] ggplot2_3.3.2            tidyverse_1.3.0          pacman_0.5.1            
+    ## 
+    ## loaded via a namespace (and not attached):
+    ##  [1] Rcpp_1.0.4.6       lubridate_1.7.9    lattice_0.20-41    class_7.3-17      
+    ##  [5] clisymbols_1.2.0   assertthat_0.2.1   digest_0.6.25      prompt_1.0.0      
+    ##  [9] R6_2.4.1           cellranger_1.1.0   backports_1.1.8    reprex_0.3.0      
+    ## [13] evaluate_0.14      e1071_1.7-3        httr_1.4.1         pillar_1.4.4      
+    ## [17] rlang_0.4.6        readxl_1.3.1       rstudioapi_0.11    blob_1.2.1        
+    ## [21] rmarkdown_2.3      munsell_0.5.0      broom_0.5.6        compiler_4.0.2    
+    ## [25] modelr_0.1.8       xfun_0.15          pkgconfig_2.0.3    htmltools_0.5.0   
+    ## [29] tidyselect_1.1.0   codetools_0.2-16   fansi_0.4.1        crayon_1.3.4.9000 
+    ## [33] dbplyr_1.4.4       withr_2.2.0        grid_4.0.2         nlme_3.1-148      
+    ## [37] jsonlite_1.7.0     gtable_0.3.0       lifecycle_0.2.0    DBI_1.1.0         
+    ## [41] magrittr_1.5       units_0.6-7        scales_1.1.1       KernSmooth_2.23-17
+    ## [45] cli_2.0.2          stringi_1.4.6      farver_2.0.3       fs_1.4.1          
+    ## [49] xml2_1.3.2         ellipsis_0.3.1     generics_0.0.2     vctrs_0.3.1       
+    ## [53] RColorBrewer_1.1-2 tools_4.0.2        glue_1.4.1         hms_0.5.3         
+    ## [57] parallel_4.0.2     yaml_2.2.1         colorspace_1.4-1   classInt_0.4-3    
+    ## [61] rvest_0.3.5        knitr_1.29         haven_2.3.1

@@ -75,7 +75,7 @@ Plot the final combination of data with the Naturalearthdata Australia data and 
 ```{r plot, eval=TRUE}
 oz <- ggplot(oz_sf) +
   geom_sf(fill = "white") +
-  geom_label(
+  geom_text(
     data = oz_sf,
     aes(x = longitude,
         y = latitude,
