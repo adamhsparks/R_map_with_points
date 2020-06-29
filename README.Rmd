@@ -2,6 +2,10 @@
 output: github_document
 ---
 
+knitr::opts_chunk$set(
+  fig.path = "figures/README-"
+)
+
 ## Creating a Map of Australia, Adding Data for Sample Collection Points
 
 This is a simple RMD file to illustrate how to use
