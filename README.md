@@ -1,7 +1,8 @@
 
 ## Creating a Map of Australia, Adding Data for Sample Collection Points
 
-![.github/workflows/build\_readme.yml](https://github.com/adamhsparks/R_map_with_points_Oz/workflows/.github/workflows/build_readme.yml/badge.svg)
+[![render
+readme](https://github.com/adamhsparks/R_map_with_points_Oz/workflows/render%20readme/badge.svg)](https://github.com/adamhsparks/R_map_with_points_Oz/actions?query=workflow%3A%22render+readme%22)
 
 This is a simple Rmd file to illustrate how to use
 [*rnaturalearth*](https://github.com/ropenscilabs/rnaturalearth),
