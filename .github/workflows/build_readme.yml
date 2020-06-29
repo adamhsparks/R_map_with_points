@@ -1,12 +1,11 @@
+# This is a basic workflow to help you get started with Actions
+
 name: render readme
 
+# Controls when the action will run
 on:
   push:
-  pull_request:
-  # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron: "0 4 * * *
+    branches: master
 
 jobs:
   render:
@@ -19,15 +18,15 @@ jobs:
     - uses: r-lib/actions/setup-r@v1
     - uses: r-lib/actions/setup-pandoc@v1
 
-    # install packages needed
-    - name: Install required packages
-      run: Rscript -e 'install.packages("rmarkdown")'
+    # install packages
+    - name: install rmarkdown
+      run: Rscript -e 'install.packages(c("rmarkdown"))'
 
-    # Render READEME.md using rmarkdown
-    - name: Render README
+    # Render README.md using rmarkdown
+    - name: render README
       run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
 
-    - name: Commit rendered README
+    - name: commit rendered README
       run: |
         git add README.md README-*
         git commit -m "Re-build README.md" || echo "No changes to commit"
