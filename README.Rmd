@@ -119,5 +119,5 @@ Please note that the R_map_with_points_Oz project is released with a [Contributo
 ### R Session Information
 
 ```{r session_info, eval=TRUE, echo=FALSE}
-session.info()
+sessionInfo()
 ```
