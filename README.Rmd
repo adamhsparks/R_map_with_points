@@ -21,6 +21,7 @@ library("pacman")
 p_load(tidyverse, rnaturalearth, raster, sf, lwgeom)
 if (!require("rnaturalearthdata")) {
   p_install_gh("ropenscilabs/rnaturalearthdata")
+  p_install_gh("ropenscilabs/rnaturalearthhires")
 }
 ```
 
