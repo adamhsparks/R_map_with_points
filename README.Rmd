@@ -110,7 +110,11 @@ ggsave("Australia_Map.tiff",
        dpi = 500)
 ```
 
-## Appendix
+## Meta
+
+### Code of Conduct
+
+Please note that the R_map_with_points_Oz project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
 
 ### R Session Information
 
