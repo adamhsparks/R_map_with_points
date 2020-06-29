@@ -1,12 +1,14 @@
 
 ## Creating a Map of Australia, Adding Data for Sample Collection Points
 
-This is a simple RMD file to illustrate how to use
+![.github/workflows/build\_readme.yml](https://github.com/adamhsparks/R_map_with_points_Oz/workflows/.github/workflows/build_readme.yml/badge.svg)
+
+This is a simple Rmd file to illustrate how to use
 [*rnaturalearth*](https://github.com/ropenscilabs/rnaturalearth),
 [*simple
 features*](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
-and *ggplot2* to create a map of Australia and plot data collection
-points on it.
+and [*ggplot2*](https://CRAN.R-project.org/package=ggplot2) to create a
+map of Australia and plot data collection points on it.
 
 ### Setup
 
@@ -23,6 +25,11 @@ if (!require("pacman")) {
 ``` r
 library("pacman")
 p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+```
+
+And one from the rOpenSci Labs.
+
+``` r
 if (!require("rnaturalearthhires")) {
   p_install_gh("ropenscilabs/rnaturalearthhires")
 }
