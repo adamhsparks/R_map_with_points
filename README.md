@@ -1,3 +1,5 @@
+knitr::opts\_chunk$set( fig.path = “figures/README\_files” )
+
 Creating a Map of Australia, Adding Data for Sample Collection Points
 ---------------------------------------------------------------------
 
@@ -25,7 +27,7 @@ To do this you’ll need a few packages from CRAN:
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     library("pacman")
     p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
@@ -42,7 +44,7 @@ To do this you’ll need a few packages from CRAN:
     ## 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     ## installing the source package 'openssl'
 
@@ -56,7 +58,7 @@ To do this you’ll need a few packages from CRAN:
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     ## 
     ## rnaturalearth installed
@@ -66,7 +68,7 @@ To do this you’ll need a few packages from CRAN:
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     ## 
     ## rnaturalearthdata installed
@@ -88,7 +90,7 @@ To do this you’ll need a few packages from CRAN:
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     ## 
     ## rgeos installed
@@ -97,7 +99,7 @@ To do this you’ll need a few packages from CRAN:
 
     ## 
     ## The downloaded binary packages are in
-    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpAjXAZs/downloaded_packages
+    ##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmprjMEZf/downloaded_packages
 
     ## 
     ## lwgeom installed
@@ -113,8 +115,8 @@ To do this you’ll need a few packages from CRAN:
     ## Downloading GitHub repo ropenscilabs/rnaturalearthhires@master
 
     ## 
-    ##      checking for file ‘/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpAjXAZs/remotes64542b9662e/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’ ...  [32m✔[39m  [90mchecking for file ‘/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpAjXAZs/remotes64542b9662e/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’[39m[36m[36m (416ms)[36m[39m
-    ##   [90m─[39m[90m  [39m[90mpreparing ‘rnaturalearthhires’:[39m[36m[36m (651ms)[36m[39m
+    ##      checking for file ‘/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmprjMEZf/remotes6c37bb63349/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’ ...  [32m✔[39m  [90mchecking for file ‘/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmprjMEZf/remotes6c37bb63349/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’[39m[36m[39m
+    ##   [90m─[39m[90m  [39m[90mpreparing ‘rnaturalearthhires’:[39m[36m[39m
     ##      checking DESCRIPTION meta-information ...  [32m✔[39m  [90mchecking DESCRIPTION meta-information[39m[36m[39m
     ##   [90m─[39m[90m  [39m[90mchecking for LF line-endings in source and make files and shell scripts[39m[36m[39m
     ##   [90m─[39m[90m  [39m[90mchecking for empty or unneeded directories[39m[36m[39m
