@@ -26,7 +26,7 @@ if (!require("rnaturalearthdata")) {
 
 ### Add a Shapefile of Australia
 
-This is our base layer, Australia, of the map from (Naturalearth.com)[https://naturalearth.com/]
+This is our base layer, Australia, of the map from (Naturalearth.com)[https://naturalearth.com/].
 
 ```{r australia}
 oz_sf <- rnaturalearth::ne_states(geounit = "australia",
