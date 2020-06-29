@@ -104,7 +104,7 @@ colour-coded by the state where they were sampled.
 ``` r
 oz <- ggplot(oz_sf) +
   geom_sf(fill = "white") +
-  geom_label(
+  geom_text(
     data = oz_sf,
     aes(x = longitude,
         y = latitude,

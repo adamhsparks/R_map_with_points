@@ -83,13 +83,11 @@ oz <- ggplot(oz_sf) +
     size = 2.5,
     hjust = 1
   ) +
-  geom_point(
-    data = point_data,
-    aes(x = Longitude,
-        y = Latitude,
-        colour = class),
-    size = 2
-  ) +
+  geom_point(data = point_data,
+             aes(x = Longitude,
+                 y = Latitude,
+                 colour = class),
+             size = 2) +
   theme_bw() +
   scale_colour_brewer(type = "Qualitative", palette = "Set1") +
   xlab("Longitude") +
