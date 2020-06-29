@@ -13,37 +13,33 @@ _ggplot2_ to create a map of Australia and plot data collection points on it.
 To do this you'll need a few packages from CRAN:
 
 ```{r pkg-load, eval=TRUE, messages=FALSE, warning=FALSE}
-#devtools::install_github("ropenscilabs/rnaturalearthdata")
-#devtools::install_github("tidyverse/ggplot2")
+if (!require("pacman")) {
+  install.packages("pacman")
+}
 
-library(tidyverse)
-library(rnaturalearth)
-library(raster)
-library(sf)
-
+library("pacman")
+p_load(tidyverse, rnaturalearth, raster, sf, lwgeom)
+if (!require("rnaturalearthdata")) {
+  p_install_gh("ropenscilabs/rnaturalearthdata")
+}
 ```
-
-## Get the Data to Create Our Map
 
 ### Add a Shapefile of Australia
 
 This is our base layer, Australia, of the map from (Naturalearth.com)[https://naturalearth.com/]
 
 ```{r, australia}
-
 oz_shape <- rnaturalearth::ne_states(geounit = "australia",
                                      returnclass = "sf")
 
 plot(oz_shape)
-
 ```
 
 However, it includes several islands and ocean that are not of interest to us.
 To fix this, crop it down to just the mainland plus Tasmania and remove Jervis Bay so that the labels on the final map product are cleaner.
 
 ```{r crop_shape}
-
-oz_shape <- st_intersection(oz_shape, 
+oz_shape <- st_intersection(oz_shape,
                 st_set_crs(
                   st_as_sf(
                     as(
@@ -61,39 +57,44 @@ plot(oz_shape)
 
 ## Import Collection Point Data
 
-Assuming the "Geocode_319 samples.csv" file is in the same working directory as this script.
+If you have your own data in a .csv file, import it using `read_csv()`.
+These are just random points that I generated to illustrate how to add points to a map.
 
-```{r collection_data, eval=FALSE}
-point_data <- read_csv("Geocode_319 samples.csv")
-point_data$State <- as.factor(point_data$State)
+```{r collection_data, eval=TRUE}
+point_data <- read_csv("sample_points.csv",
+                       col_types = cols(
+                         col_double(),
+                         col_double(),
+                         col_factor()
+                       ))
 ```
 
-## Plot using `ggplot2`
+## Plot using ggplot2
 
-Plot the final combination of data with the Naturalearth data Australia and state outlines with the sampling location points overplayed and colour-coded by the state where they were sampled.
+Plot the final combination of data with the Naturalearthdata Australia data and state outlines with the sampling location points overplayed and colour-coded by the state where they were sampled.
 
-```{r plot, eval=FALSE}
-
+```{r plot, eval=TRUE}
 oz <- ggplot(oz_shape) +
   geom_sf(fill = "white") +
   geom_text(
-  data = oz_shape,
-  aes(x = longitude,
-  y = latitude,
-  label = abbrev),
-  size = 2.5,
-  hjust = 1
+    data = oz_shape,
+    aes(x = longitude,
+        y = latitude,
+        label = abbrev),
+    size = 2.5,
+    hjust = 1
   ) +
-  geom_point(data = point_data,
-  aes(x = Longitude,
-  y = Latitude,
-  colour = State),
-  alpha = 0.6,
-  size = 2) +
+  geom_point(
+    data = point_data,
+    aes(x = Longitude,
+        y = Latitude,
+        colour = class),
+    size = 2
+  ) +
   theme_bw() +
+  scale_colour_brewer(type = "Qualitative", palette = "Set1") +
   xlab("Longitude") +
   ylab("Latitude") +
-  theme(legend.position = "none") +
   coord_sf()
 
 oz
@@ -101,10 +102,13 @@ oz
 
 ## Save the graph
 
-Export at 500 dpi for publication with a width 190mm for a 2-column width in an Elsevier publication.
+Export at 500 DPI for publication with a width 190mm for a 2-column width figure.
 
 ```{r, eval=FALSE}
-ggsave("Australia_Map.tiff", width = 190, units = "mm", dpi = 500)
+ggsave("Australia_Map.tiff",
+       width = 190,
+       units = "mm",
+       dpi = 500)
 ```
 
 # Appendix
