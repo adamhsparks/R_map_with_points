@@ -1,11 +1,6 @@
 ---
 output: github_document
 ---
-```{r opts}
-knitr::opts_chunk$set(
-  fig.path = "figures/README_files"
-)
-```
 
 ## Creating a Map of Australia, Adding Data for Sample Collection Points
 

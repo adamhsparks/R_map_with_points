@@ -1,10 +1,4 @@
 
-``` r
-knitr::opts_chunk$set(
-  fig.path = "figures/README_files"
-)
-```
-
 ## Creating a Map of Australia, Adding Data for Sample Collection Points
 
 This is a simple RMD file to illustrate how to use
@@ -51,7 +45,7 @@ plot(oz_sf)
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
     ## all
 
-![](figures/README_filesaustralia-1.png)<!-- -->
+![](README_files/figure-gfm/australia-1.png)<!-- -->
 
 However, it includes several islands and ocean that are not of interest
 to us. To fix this, crop it down to just the mainland plus Tasmania and
@@ -84,7 +78,7 @@ plot(oz_sf)
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
     ## all
 
-![](figures/README_filescrop_sf-1.png)<!-- -->
+![](README_files/figure-gfm/crop_sf-1.png)<!-- -->
 
 ## Import Collection Point Data
 
@@ -132,7 +126,7 @@ oz <- ggplot(oz_sf) +
 oz
 ```
 
-![](figures/README_filesplot-1.png)<!-- -->
+![](README_files/figure-gfm/plot-1.png)<!-- -->
 
 ## Save the Graph
 
