@@ -21,7 +21,7 @@ jobs:
 
     # install packages needed
     - name: install required packages
-      run: Rscript -e 'install.packages(c("rmarkdown","gratia"))'
+      run: Rscript -e 'install.packages("rmarkdown")'
 
     # Render READEME.md using rmarkdown
     - name: render README
