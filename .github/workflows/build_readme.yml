@@ -1,9 +1,9 @@
-# This is a basic workflow to help you get started with Actions
 
 name: render readme
 
 on:
   push:
+  - main
   pull_request:
   # for now, CRON jobs only run on the default branch of the repo (i.e. usually on master)
   schedule:
@@ -28,8 +28,3 @@ jobs:
     # Render README.md using rmarkdown
     - name: render README
       run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
-
-    - name: commit rendered README
-      run: |
-        git commit -am "Re-build README.md" || echo "No changes to commit"
-        git push origin main || echo "No changes to commit"
