@@ -18,9 +18,8 @@ if (!require("pacman")) {
 }
 
 library("pacman")
-p_load(tidyverse, rnaturalearth, raster, sf, rgeos, lwgeom)
-if (!require("rnaturalearthdata")) {
-  p_install_gh("ropenscilabs/rnaturalearthdata")
+p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+if (!require("rnaturalearthhires")) {
   p_install_gh("ropenscilabs/rnaturalearthhires")
 }
 ```
