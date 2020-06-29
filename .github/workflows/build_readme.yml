@@ -20,16 +20,14 @@ jobs:
     - uses: r-lib/actions/setup-pandoc@v1
 
     # install packages needed
-    - name: install required packages
-      run: install.packages("rmarkdown")
-      shell: Rscript {0}
+    - name: Install required packages
+      run: Rscript -e 'install.packages("rmarkdown")'
 
     # Render READEME.md using rmarkdown
-    - name: render README
-      run: rmarkdown::render("README.Rmd", output_format = "md_document")
-      shell: Rscript {0}
+    - name: Render README
+      run: Rscript -e 'rmarkdown::render("README.Rmd", output_format = "md_document")'
 
-    - name: commit rendered README
+    - name: Commit rendered README
       run: |
         git add README.md README-*
         git commit -m "Re-build README.md" || echo "No changes to commit"
