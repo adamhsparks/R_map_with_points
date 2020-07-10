@@ -19,7 +19,6 @@ if (!require("pacman")) {
   install.packages("pacman")
 }
 
-library("pacman")
 p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
 ```
 
