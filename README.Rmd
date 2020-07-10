@@ -15,11 +15,8 @@ This is a simple Rmd file to illustrate how to use
 To do this you'll need a few packages from CRAN:
 
 ```{r pkg-load, eval=TRUE, messages=FALSE, warning=FALSE}
-if (!require("pacman")) {
-  install.packages("pacman")
-}
-
-p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
 ```
 
 And one from the rOpenSci Labs.
