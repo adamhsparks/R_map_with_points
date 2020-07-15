@@ -15,9 +15,8 @@ This is a simple Rmd file to illustrate how to use
 To do this you'll need a few packages from CRAN:
 
 ```{r pkg-load, eval=TRUE, messages=FALSE, warning=FALSE}
-if (!require("pacman")) {
+if (!require("pacman"))
   install.packages("pacman")
-}
 pacman::p_load(readr,
                ggplot2,
                rnaturalearth,
@@ -32,9 +31,8 @@ pacman::p_load(readr,
 And one from the rOpenSci Labs.
 
 ```{r github-install}
-if (!require("rnaturalearthhires")) {
-  p_install_gh("ropenscilabs/rnaturalearthhires")
-}
+if (!require("rnaturalearthhires"))
+  pacman::p_install_gh("ropenscilabs/rnaturalearthhires")
 ```
 
 ### Add a Shapefile of Australia
