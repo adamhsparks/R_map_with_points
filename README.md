@@ -16,59 +16,32 @@ map of Australia and plot data collection points on it.
 To do this you’ll need a few packages from CRAN:
 
 ``` r
-if (!require("pacman")) {
+if (!require("pacman"))
   install.packages("pacman")
-}
 ```
 
     ## Loading required package: pacman
 
 ``` r
-pacman::p_load(readr, ggplot2, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+pacman::p_load(readr,
+               ggplot2,
+               rnaturalearth,
+               rnaturalearthdata,
+               raster,
+               sf,
+               rgeos,
+               lwgeom
+)
 ```
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T//Rtmpr3LyA1/downloaded_packages
-
-    ## 
-    ## rnaturalearthdata installed
-
-    ## 
-    ## The downloaded binary packages are in
-    ##  /var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T//Rtmpr3LyA1/downloaded_packages
-
-    ## 
-    ## lwgeom installed
 
 And one from the rOpenSci Labs.
 
 ``` r
-if (!require("rnaturalearthhires")) {
-  p_install_gh("ropenscilabs/rnaturalearthhires")
-}
+if (!require("rnaturalearthhires"))
+  pacman::p_install_gh("ropenscilabs/rnaturalearthhires")
 ```
 
     ## Loading required package: rnaturalearthhires
-
-    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
-    ## logical.return = TRUE, : there is no package called 'rnaturalearthhires'
-
-    ## Downloading GitHub repo ropenscilabs/rnaturalearthhires@master
-
-    ## 
-    ##       ✓  checking for file ‘/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/Rtmpr3LyA1/remotes7b9c74f5f44c/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’ (436ms)
-    ##       ─  preparing ‘rnaturalearthhires’:
-    ##    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✓  checking DESCRIPTION meta-information
-    ##       ─  checking for LF line-endings in source and make files and shell scripts
-    ## ─  checking for empty or unneeded directories
-    ##   ─  building ‘rnaturalearthhires_0.2.0.tar.gz’
-    ##      
-    ## 
-
-    ## 
-    ## The following packages were installed:
-    ## rnaturalearthhires
 
 ### Add a Shapefile of Australia
 
@@ -206,29 +179,21 @@ By contributing to this project, you agree to abide by its terms.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] lwgeom_0.2-5            rgeos_0.5-3             sf_0.9-4               
-    ##  [4] raster_3.3-7            sp_1.4-2                rnaturalearthdata_0.1.0
-    ##  [7] rnaturalearth_0.1.0     ggplot2_3.3.2           readr_1.3.1            
-    ## [10] pacman_0.5.1           
+    ##  [1] rnaturalearthhires_0.2.0 lwgeom_0.2-5             rgeos_0.5-3             
+    ##  [4] sf_0.9-4                 raster_3.3-7             sp_1.4-2                
+    ##  [7] rnaturalearthdata_0.1.0  rnaturalearth_0.1.0      ggplot2_3.3.2           
+    ## [10] readr_1.3.1              pacman_0.5.1            
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.5.1             lattice_0.20-41          prettyunits_1.1.1       
-    ##  [4] class_7.3-17             ps_1.3.3                 assertthat_0.2.1        
-    ##  [7] rprojroot_1.3-2          digest_0.6.25            R6_2.4.1                
-    ## [10] backports_1.1.8          evaluate_0.14            e1071_1.7-3             
-    ## [13] pillar_1.4.6             rlang_0.4.7              curl_4.3                
-    ## [16] callr_3.4.3              rnaturalearthhires_0.2.0 rmarkdown_2.3           
-    ## [19] stringr_1.4.0            munsell_0.5.0            compiler_4.0.2          
-    ## [22] xfun_0.15                pkgconfig_2.0.3          pkgbuild_1.1.0          
-    ## [25] htmltools_0.5.0          tidyselect_1.1.0         tibble_3.0.3            
-    ## [28] codetools_0.2-16         fansi_0.4.1              crayon_1.3.4            
-    ## [31] dplyr_1.0.0              withr_2.2.0              grid_4.0.2              
-    ## [34] gtable_0.3.0             lifecycle_0.2.0          DBI_1.1.0               
-    ## [37] magrittr_1.5             units_0.6-7              scales_1.1.1            
-    ## [40] KernSmooth_2.23-17       cli_2.0.2                stringi_1.4.6           
-    ## [43] farver_2.0.3             remotes_2.1.1            ellipsis_0.3.1          
-    ## [46] generics_0.0.2           vctrs_0.3.1              RColorBrewer_1.1-2      
-    ## [49] tools_4.0.2              glue_1.4.1               purrr_0.3.4             
-    ## [52] hms_0.5.3                processx_3.4.3           parallel_4.0.2          
-    ## [55] yaml_2.2.1               colorspace_1.4-2         classInt_0.4-3          
-    ## [58] knitr_1.29
+    ##  [1] Rcpp_1.0.5.1       RColorBrewer_1.1-2 pillar_1.4.6       compiler_4.0.2    
+    ##  [5] class_7.3-17       tools_4.0.2        digest_0.6.25      lattice_0.20-41   
+    ##  [9] evaluate_0.14      lifecycle_0.2.0    tibble_3.0.3       gtable_0.3.0      
+    ## [13] pkgconfig_2.0.3    rlang_0.4.7        DBI_1.1.0          yaml_2.2.1        
+    ## [17] parallel_4.0.2     xfun_0.15          e1071_1.7-3        withr_2.2.0       
+    ## [21] stringr_1.4.0      dplyr_1.0.0        knitr_1.29         generics_0.0.2    
+    ## [25] vctrs_0.3.1        hms_0.5.3          classInt_0.4-3     grid_4.0.2        
+    ## [29] tidyselect_1.1.0   glue_1.4.1         R6_2.4.1           rmarkdown_2.3     
+    ## [33] farver_2.0.3       purrr_0.3.4        magrittr_1.5       codetools_0.2-16  
+    ## [37] units_0.6-7        scales_1.1.1       ellipsis_0.3.1     htmltools_0.5.0   
+    ## [41] colorspace_1.4-2   KernSmooth_2.23-17 stringi_1.4.6      munsell_0.5.0     
+    ## [45] crayon_1.3.4
