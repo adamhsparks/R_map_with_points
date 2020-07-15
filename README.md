@@ -24,9 +24,22 @@ if (!require("pacman")) {
     ## Loading required package: pacman
 
 ``` r
-library("pacman")
-p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+pacman::p_load(readr, ggplot2, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
 ```
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T//Rtmpr3LyA1/downloaded_packages
+
+    ## 
+    ## rnaturalearthdata installed
+
+    ## 
+    ## The downloaded binary packages are in
+    ##  /var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T//Rtmpr3LyA1/downloaded_packages
+
+    ## 
+    ## lwgeom installed
 
 And one from the rOpenSci Labs.
 
@@ -37,6 +50,25 @@ if (!require("rnaturalearthhires")) {
 ```
 
     ## Loading required package: rnaturalearthhires
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'rnaturalearthhires'
+
+    ## Downloading GitHub repo ropenscilabs/rnaturalearthhires@master
+
+    ## 
+    ##       ✓  checking for file ‘/private/var/folders/yv/4xy6zs3x5qsgj96389nkjvtw0000gn/T/Rtmpr3LyA1/remotes7b9c74f5f44c/ropensci-rnaturalearthhires-2ed7a93/DESCRIPTION’ (436ms)
+    ##       ─  preparing ‘rnaturalearthhires’:
+    ##    checking DESCRIPTION meta-information ...     checking DESCRIPTION meta-information ...   ✓  checking DESCRIPTION meta-information
+    ##       ─  checking for LF line-endings in source and make files and shell scripts
+    ## ─  checking for empty or unneeded directories
+    ##   ─  building ‘rnaturalearthhires_0.2.0.tar.gz’
+    ##      
+    ## 
+
+    ## 
+    ## The following packages were installed:
+    ## rnaturalearthhires
 
 ### Add a Shapefile of Australia
 
@@ -174,27 +206,29 @@ By contributing to this project, you agree to abide by its terms.
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## other attached packages:
-    ##  [1] rnaturalearthhires_0.2.0 lwgeom_0.2-5             rgeos_0.5-3             
-    ##  [4] sf_0.9-4                 raster_3.3-7             sp_1.4-2                
-    ##  [7] rnaturalearthdata_0.1.0  rnaturalearth_0.1.0      forcats_0.5.0           
-    ## [10] stringr_1.4.0            dplyr_1.0.0              purrr_0.3.4             
-    ## [13] readr_1.3.1              tidyr_1.1.0              tibble_3.0.1            
-    ## [16] ggplot2_3.3.2            tidyverse_1.3.0          pacman_0.5.1            
+    ##  [1] lwgeom_0.2-5            rgeos_0.5-3             sf_0.9-4               
+    ##  [4] raster_3.3-7            sp_1.4-2                rnaturalearthdata_0.1.0
+    ##  [7] rnaturalearth_0.1.0     ggplot2_3.3.2           readr_1.3.1            
+    ## [10] pacman_0.5.1           
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.4.6       lubridate_1.7.9    lattice_0.20-41    class_7.3-17      
-    ##  [5] clisymbols_1.2.0   assertthat_0.2.1   digest_0.6.25      prompt_1.0.0      
-    ##  [9] R6_2.4.1           cellranger_1.1.0   backports_1.1.8    reprex_0.3.0      
-    ## [13] evaluate_0.14      e1071_1.7-3        httr_1.4.1         pillar_1.4.4      
-    ## [17] rlang_0.4.6        readxl_1.3.1       rstudioapi_0.11    blob_1.2.1        
-    ## [21] rmarkdown_2.3      munsell_0.5.0      broom_0.5.6        compiler_4.0.2    
-    ## [25] modelr_0.1.8       xfun_0.15          pkgconfig_2.0.3    htmltools_0.5.0   
-    ## [29] tidyselect_1.1.0   codetools_0.2-16   fansi_0.4.1        crayon_1.3.4.9000 
-    ## [33] dbplyr_1.4.4       withr_2.2.0        grid_4.0.2         nlme_3.1-148      
-    ## [37] jsonlite_1.7.0     gtable_0.3.0       lifecycle_0.2.0    DBI_1.1.0         
-    ## [41] magrittr_1.5       units_0.6-7        scales_1.1.1       KernSmooth_2.23-17
-    ## [45] cli_2.0.2          stringi_1.4.6      farver_2.0.3       fs_1.4.1          
-    ## [49] xml2_1.3.2         ellipsis_0.3.1     generics_0.0.2     vctrs_0.3.1       
-    ## [53] RColorBrewer_1.1-2 tools_4.0.2        glue_1.4.1         hms_0.5.3         
-    ## [57] parallel_4.0.2     yaml_2.2.1         colorspace_1.4-1   classInt_0.4-3    
-    ## [61] rvest_0.3.5        knitr_1.29         haven_2.3.1
+    ##  [1] Rcpp_1.0.5.1             lattice_0.20-41          prettyunits_1.1.1       
+    ##  [4] class_7.3-17             ps_1.3.3                 assertthat_0.2.1        
+    ##  [7] rprojroot_1.3-2          digest_0.6.25            R6_2.4.1                
+    ## [10] backports_1.1.8          evaluate_0.14            e1071_1.7-3             
+    ## [13] pillar_1.4.6             rlang_0.4.7              curl_4.3                
+    ## [16] callr_3.4.3              rnaturalearthhires_0.2.0 rmarkdown_2.3           
+    ## [19] stringr_1.4.0            munsell_0.5.0            compiler_4.0.2          
+    ## [22] xfun_0.15                pkgconfig_2.0.3          pkgbuild_1.1.0          
+    ## [25] htmltools_0.5.0          tidyselect_1.1.0         tibble_3.0.3            
+    ## [28] codetools_0.2-16         fansi_0.4.1              crayon_1.3.4            
+    ## [31] dplyr_1.0.0              withr_2.2.0              grid_4.0.2              
+    ## [34] gtable_0.3.0             lifecycle_0.2.0          DBI_1.1.0               
+    ## [37] magrittr_1.5             units_0.6-7              scales_1.1.1            
+    ## [40] KernSmooth_2.23-17       cli_2.0.2                stringi_1.4.6           
+    ## [43] farver_2.0.3             remotes_2.1.1            ellipsis_0.3.1          
+    ## [46] generics_0.0.2           vctrs_0.3.1              RColorBrewer_1.1-2      
+    ## [49] tools_4.0.2              glue_1.4.1               purrr_0.3.4             
+    ## [52] hms_0.5.3                processx_3.4.3           parallel_4.0.2          
+    ## [55] yaml_2.2.1               colorspace_1.4-2         classInt_0.4-3          
+    ## [58] knitr_1.29

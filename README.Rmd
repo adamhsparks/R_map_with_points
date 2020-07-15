@@ -18,9 +18,15 @@ To do this you'll need a few packages from CRAN:
 if (!require("pacman")) {
   install.packages("pacman")
 }
-
-library("pacman")
-p_load(tidyverse, rnaturalearth, rnaturalearthdata, raster, sf, rgeos, lwgeom)
+pacman::p_load(readr,
+               ggplot2,
+               rnaturalearth,
+               rnaturalearthdata,
+               raster,
+               sf,
+               rgeos,
+               lwgeom
+)
 ```
 
 And one from the rOpenSci Labs.
