@@ -21,7 +21,6 @@ pacman::p_load(readr,
                ggplot2,
                rnaturalearth,
                rnaturalearthdata,
-               raster,
                sf,
                rgeos,
                lwgeom
@@ -50,15 +49,11 @@ However, it includes several islands and ocean that are not of interest to us.
 To fix this, crop it down to just the mainland plus Tasmania and remove Jervis Bay so that the labels on the final map product are cleaner.
 
 ```{r crop_sf}
-oz_sf <- st_intersection(oz_sf,
-                         st_set_crs(st_as_sf(as(
-                           raster::extent(114,
-                                          155,
-                                          -45,
-                                          -9),
-                           "SpatialPolygons"
-                         )),
-                         st_crs(oz_sf)))
+oz_sf <- st_crop(x = oz_sf,
+                 y = c(xmin = 114,
+                       xmax =155,
+                       ymin = -45,
+                       ymax = -9))
 
 oz_sf <- oz_sf[oz_sf$abbrev != "J.B.T.",]
 

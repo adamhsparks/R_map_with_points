@@ -1,5 +1,6 @@
 
-## Creating a Map of Australia, Adding Data for Sample Collection Points
+Creating a Map of Australia, Adding Data for Sample Collection Points
+---------------------------------------------------------------------
 
 [![render
 readme](https://github.com/adamhsparks/R_map_with_points_Oz/workflows/render%20readme/badge.svg)](https://github.com/adamhsparks/R_map_with_points_Oz/actions?query=workflow%3A%22render+readme%22)
@@ -15,45 +16,36 @@ map of Australia and plot data collection points on it.
 
 To do this you’ll need a few packages from CRAN:
 
-``` r
-if (!require("pacman"))
-  install.packages("pacman")
-```
+    if (!require("pacman"))
+      install.packages("pacman")
 
     ## Loading required package: pacman
 
-``` r
-pacman::p_load(readr,
-               ggplot2,
-               rnaturalearth,
-               rnaturalearthdata,
-               raster,
-               sf,
-               rgeos,
-               lwgeom
-)
-```
+    pacman::p_load(readr,
+                   ggplot2,
+                   rnaturalearth,
+                   rnaturalearthdata,
+                   sf,
+                   rgeos,
+                   lwgeom
+    )
 
 And one from the rOpenSci Labs.
 
-``` r
-if (!require("rnaturalearthhires"))
-  pacman::p_install_gh("ropenscilabs/rnaturalearthhires")
-```
+    if (!require("rnaturalearthhires"))
+      pacman::p_install_gh("ropenscilabs/rnaturalearthhires")
 
     ## Loading required package: rnaturalearthhires
 
 ### Add a Shapefile of Australia
 
 This is our base layer, Australia, of the map from
-(Naturalearth.com)\[<https://naturalearth.com/>\].
+(Naturalearth.com)\[<a href="https://naturalearth.com/" class="uri">https://naturalearth.com/</a>\].
 
-``` r
-oz_sf <- rnaturalearth::ne_states(geounit = "australia",
-                                  returnclass = "sf")
+    oz_sf <- rnaturalearth::ne_states(geounit = "australia",
+                                      returnclass = "sf")
 
-plot(oz_sf)
-```
+    plot(oz_sf)
 
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
     ## all
@@ -65,95 +57,85 @@ to us. To fix this, crop it down to just the mainland plus Tasmania and
 remove Jervis Bay so that the labels on the final map product are
 cleaner.
 
-``` r
-oz_sf <- st_intersection(oz_sf,
-                         st_set_crs(st_as_sf(as(
-                           raster::extent(114,
-                                          155,
-                                          -45,
-                                          -9),
-                           "SpatialPolygons"
-                         )),
-                         st_crs(oz_sf)))
-```
+    oz_sf <- st_crop(x = oz_sf,
+                     y = c(xmin = 114,
+                           xmax =155,
+                           ymin = -45,
+                           ymax = -9))
 
     ## although coordinates are longitude/latitude, st_intersection assumes that they are planar
 
     ## Warning: attribute variables are assumed to be spatially constant throughout all
     ## geometries
 
-``` r
-oz_sf <- oz_sf[oz_sf$abbrev != "J.B.T.",]
+    oz_sf <- oz_sf[oz_sf$abbrev != "J.B.T.",]
 
-plot(oz_sf)
-```
+    plot(oz_sf)
 
     ## Warning: plotting the first 9 out of 83 attributes; use max.plot = 83 to plot
     ## all
 
 ![](README_files/figure-gfm/crop_sf-1.png)<!-- -->
 
-## Import Collection Point Data
+Import Collection Point Data
+----------------------------
 
 If you have your own data in a .csv file, import it using `read_csv()`.
 These are just random points that I generated and saved as a .csv file
 for this work to illustrate how to add points to a map.
 
-``` r
-point_data <- read_csv("sample_points.csv",
-                       col_types = cols(
-                         col_double(),
-                         col_double(),
-                         col_factor()
-                       ))
-```
+    point_data <- read_csv("sample_points.csv",
+                           col_types = cols(
+                             col_double(),
+                             col_double(),
+                             col_factor()
+                           ))
 
-## Plot Using ggplot2
+Plot Using ggplot2
+------------------
 
 Plot the final combination of data with the Naturalearthdata Australia
 data and state outlines with the sampling location points overplayed and
 colour-coded by the state where they were sampled.
 
-``` r
-oz <- ggplot(oz_sf) +
-  geom_sf(fill = "white") +
-  geom_text(
-    data = oz_sf,
-    aes(x = longitude,
-        y = latitude,
-        label = abbrev),
-    size = 2.5,
-    hjust = 1
-  ) +
-  geom_point(data = point_data,
-             aes(x = Longitude,
-                 y = Latitude,
-                 colour = class),
-             size = 2) +
-  theme_bw() +
-  scale_colour_brewer(type = "Qualitative", palette = "Set1") +
-  xlab("Longitude") +
-  ylab("Latitude") +
-  coord_sf()
+    oz <- ggplot(oz_sf) +
+      geom_sf(fill = "white") +
+      geom_text(
+        data = oz_sf,
+        aes(x = longitude,
+            y = latitude,
+            label = abbrev),
+        size = 2.5,
+        hjust = 1
+      ) +
+      geom_point(data = point_data,
+                 aes(x = Longitude,
+                     y = Latitude,
+                     colour = class),
+                 size = 2) +
+      theme_bw() +
+      scale_colour_brewer(type = "Qualitative", palette = "Set1") +
+      xlab("Longitude") +
+      ylab("Latitude") +
+      coord_sf()
 
-oz
-```
+    oz
 
 ![](README_files/figure-gfm/plot-1.png)<!-- -->
 
-## Save the Graph
+Save the Graph
+--------------
 
 Export at 500 DPI for publication with a width 190mm for a 2-column
 width figure.
 
-``` r
-ggsave("Australia_Map.tiff",
-       width = 190,
-       units = "mm",
-       dpi = 500)
-```
+    ggsave("Australia_Map.tiff",
+           width = 190,
+           units = "mm",
+           dpi = 500)
 
-## Meta
+Meta
+----
 
 ### Code of Conduct
 
@@ -166,7 +148,7 @@ By contributing to this project, you agree to abide by its terms.
 
     ## R version 4.0.2 (2020-06-22)
     ## Platform: x86_64-apple-darwin17.0 (64-bit)
-    ## Running under: macOS Catalina 10.15.5
+    ## Running under: macOS Catalina 10.15.6
     ## 
     ## Matrix products: default
     ## BLAS:   /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRblas.dylib
@@ -180,20 +162,19 @@ By contributing to this project, you agree to abide by its terms.
     ## 
     ## other attached packages:
     ##  [1] rnaturalearthhires_0.2.0 lwgeom_0.2-5             rgeos_0.5-3             
-    ##  [4] sf_0.9-4                 raster_3.3-7             sp_1.4-2                
-    ##  [7] rnaturalearthdata_0.1.0  rnaturalearth_0.1.0      ggplot2_3.3.2           
-    ## [10] readr_1.3.1              pacman_0.5.1            
+    ##  [4] sp_1.4-2                 sf_0.9-5                 rnaturalearthdata_0.1.0 
+    ##  [7] rnaturalearth_0.1.0      ggplot2_3.3.2            readr_1.3.1             
+    ## [10] pacman_0.5.1            
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] Rcpp_1.0.5.1       RColorBrewer_1.1-2 pillar_1.4.6       compiler_4.0.2    
+    ##  [1] Rcpp_1.0.5         RColorBrewer_1.1-2 pillar_1.4.6       compiler_4.0.2    
     ##  [5] class_7.3-17       tools_4.0.2        digest_0.6.25      lattice_0.20-41   
     ##  [9] evaluate_0.14      lifecycle_0.2.0    tibble_3.0.3       gtable_0.3.0      
     ## [13] pkgconfig_2.0.3    rlang_0.4.7        DBI_1.1.0          yaml_2.2.1        
-    ## [17] parallel_4.0.2     xfun_0.15          e1071_1.7-3        withr_2.2.0       
-    ## [21] stringr_1.4.0      dplyr_1.0.0        knitr_1.29         generics_0.0.2    
-    ## [25] vctrs_0.3.1        hms_0.5.3          classInt_0.4-3     grid_4.0.2        
+    ## [17] parallel_4.0.2     xfun_0.16          e1071_1.7-3        withr_2.2.0       
+    ## [21] stringr_1.4.0      dplyr_1.0.1        knitr_1.29         generics_0.0.2    
+    ## [25] vctrs_0.3.2        hms_0.5.3          classInt_0.4-3     grid_4.0.2        
     ## [29] tidyselect_1.1.0   glue_1.4.1         R6_2.4.1           rmarkdown_2.3     
-    ## [33] farver_2.0.3       purrr_0.3.4        magrittr_1.5       codetools_0.2-16  
-    ## [37] units_0.6-7        scales_1.1.1       ellipsis_0.3.1     htmltools_0.5.0   
-    ## [41] colorspace_1.4-2   KernSmooth_2.23-17 stringi_1.4.6      munsell_0.5.0     
-    ## [45] crayon_1.3.4
+    ## [33] farver_2.0.3       purrr_0.3.4        magrittr_1.5       units_0.6-7       
+    ## [37] scales_1.1.1       ellipsis_0.3.1     htmltools_0.5.0    colorspace_1.4-1  
+    ## [41] KernSmooth_2.23-17 stringi_1.4.6      munsell_0.5.0      crayon_1.3.4
