@@ -76,7 +76,7 @@ point_data <- read_csv("sample_points.csv",
 
 ## Plot Using ggplot2
 
-Plot the final combination of data with the Naturalearthdata Australia data and state outlines with the sampling location points overplayed and colour-coded by the state where they were sampled.
+Plot the final combination of data with the Naturalearthdata Australia data and state outlines with the sampling location points over-layed and colour-coded by the state where they were sampled.
 
 ```{r plot, eval=TRUE}
 oz <- ggplot(oz_sf) +
